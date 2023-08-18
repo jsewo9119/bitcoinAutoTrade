@@ -2,8 +2,8 @@ import time
 import pyupbit
 import datetime
 
-access = "mykey"
-secret = "secret"
+access = "LtkkonPLe02FITqDa5HvUiOuAob1wLGHjwAjrMb9"
+secret = "RB9V2SOlScs0KsCdkyMfqYPGLDNza6ruwKJAk1cx"
 coin_count = 0
 current_coin =""
 btc = "KRW-BTC"
