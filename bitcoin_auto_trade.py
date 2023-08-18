@@ -51,7 +51,7 @@ while True:
         now = datetime.datetime.now()
         start_time = get_start_time(coin_select(coin_count))
         end_time = start_time + datetime.timedelta(days=1)
-
+        print('loopStart')
         if start_time < now < end_time - datetime.timedelta(seconds=10):
             target_price = get_target_price(coin_select(coin_count), 0.5)
             current_price = get_current_price(coin_select(coin_count))
@@ -63,16 +63,16 @@ while True:
                 if krw > 5000:
                     upbit.buy_market_order(coin_select(coin_count), krw*0.9995)
                     current_coin = coin_select(coin_count)
-                    print("매수")
+                    print("buy")
             else:
-                print('아무일도 없었다')
+                print('nothing')
                 print(coin_select(coin_count))
         else:
             coin = get_balance(current_coin[4:7])
             coin_quantity = 5000/pyupbit.get_current_price(current_coin)
             if coin > coin_quantity:
                 upbit.sell_market_order(coin_select(coin_count), coin*0.9995)
-                print('매도')
+                print('sell')
         
         time.sleep(1)
     except Exception as e:
