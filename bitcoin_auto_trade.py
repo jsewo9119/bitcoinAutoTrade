@@ -2,8 +2,8 @@ import time
 import pyupbit
 import datetime
 
-access = "LtkkonPLe02FITqDa5HvUiOuAob1wLGHjwAjrMb9"
-secret = "RB9V2SOlScs0KsCdkyMfqYPGLDNza6ruwKJAk1cx"
+access = "api"
+secret = "secret"
 coin_count = 0
 current_coin =""
 semi_current_coin = ""
