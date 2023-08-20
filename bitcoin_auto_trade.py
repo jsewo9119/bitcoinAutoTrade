@@ -94,7 +94,7 @@ while True:
                     current_coin = coin_select(coin_count)
                     print("매수")
             else:
-                print('아무일도 없었다')
+                print('아무일도 없었다1')
                 print(coin_select(coin_count))
         else:
             coin = get_balance(current_coin[4:7])
