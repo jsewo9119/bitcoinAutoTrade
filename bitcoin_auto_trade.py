@@ -4,14 +4,15 @@ import datetime
 
 access = "LtkkonPLe02FITqDa5HvUiOuAob1wLGHjwAjrMb9"
 secret = "RB9V2SOlScs0KsCdkyMfqYPGLDNza6ruwKJAk1cx"
-
 coin_count = 0
 current_coin =""
 semi_current_coin = ""
 btc = "KRW-BTC"
 xrp = "KRW-XRP"
+trx = "KRW-TRX"
 eth  = "KRW-ETH"
-coin_list = [btc,xrp,eth]
+
+coin_list = [btc,xrp,trx,eth]
 upbit = pyupbit.Upbit(access, secret)
 
 def get_target_price(ticker, k):
@@ -76,6 +77,9 @@ print("autotrade start")
 # 자동매매 시작
 while True:
     try:
+               
+        if coin_count >=len(coin_list):
+            coin_count = 0
         now = datetime.datetime.now()
         start_time = get_start_time(coin_select(coin_count))
         end_time = start_time + datetime.timedelta(days=1)
@@ -84,18 +88,22 @@ while True:
             semi_current_coin = coin_select(coin_count)
             target_price = get_target_price(coin_select(coin_count), best_ror())
             current_price = get_current_price(coin_select(coin_count))
-            coin_count+=1
-            if coin_count >=3:
-                coin_count = 0
+            
             if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
                     upbit.buy_market_order(coin_select(coin_count), krw*0.9995)
                     current_coin = coin_select(coin_count)
-                    print("매수")
+                    print(f"{current_coin}매수")
+                else : 
+                    print(f'{coin_select(coin_count)}을 사기엔 현금부족')
+
+     
+
             else:
-                print('아무일도 없었다1')
+                print('아무일도 없었다')
                 print(coin_select(coin_count))
+            coin_count+=1
         else:
             coin = get_balance(current_coin[4:7])
             current_price = pyupbit.get_current_price(current_coin)
