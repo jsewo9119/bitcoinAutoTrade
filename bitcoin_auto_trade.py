@@ -12,6 +12,7 @@ btc = "KRW-BTC"
 xrp = "KRW-XRP"
 trx = "KRW-TRX"
 eth  = "KRW-ETH"
+is_on_trading = False
 
 coin_list = [btc,xrp,trx,eth]
 upbit = pyupbit.Upbit(access, secret)
@@ -85,16 +86,17 @@ while True:
         start_time = get_start_time(coin_select(coin_count))
         end_time = start_time + datetime.timedelta(days=1)
 
-        if start_time < now < end_time - datetime.timedelta(seconds=10):
+        if start_time < now < end_time - datetime.timedelta(seconds=10) and is_on_trading == False :
             semi_current_coin = coin_select(coin_count)
             target_price = get_target_price(coin_select(coin_count), best_ror())
             current_price = get_current_price(coin_select(coin_count))
             
-            if target_price < current_price:
+            if target_price < current_price and is_on_trading == False:
                 krw = get_balance("KRW")
                 if krw > 5000:
                     upbit.buy_market_order(coin_select(coin_count), krw*0.9995)
                     current_coin = coin_select(coin_count)
+                    is_on_trading = True
                     print(f"{current_coin}매수")
                 else : 
                     print(f'{coin_select(coin_count)}을 사기엔 현금부족')
@@ -105,12 +107,15 @@ while True:
                 print('아무일도 없었다')
                 print(coin_select(coin_count))
             coin_count+=1
+        elif start_time < now < end_time - datetime.timedelta(seconds=10) and is_on_trading == True:
+            print('자동투자중')
         else:
             coin = get_balance(current_coin[4:7])
             current_price = pyupbit.get_current_price(current_coin)
             coin_quantity = 5000 / current_price
-            if coin > coin_quantity:
-                upbit.sell_market_order(coin_select(coin_count), coin*0.9995)
+            if coin > 0:
+                upbit.sell_market_order(current_coin, coin*0.9995)
+                is_on_trading = False
                 print('매도')
         
         time.sleep(1)
