@@ -3,8 +3,8 @@ import pyupbit
 import datetime
 import numpy as np
 
-access = "MMGSnxR3gZgqMJMd6SOYeE7fw3PEqmhagjfpdJCa"
-secret = "A7xPRF1R9bJcPrM8fRVAwYXvoLl7OVRSSBPao0ld"
+access = "API"
+secret = "secret"
 coin_count = 0
 current_coin =""
 semi_current_coin = ""
